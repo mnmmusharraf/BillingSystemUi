@@ -1,0 +1,22 @@
+name: Billing UI CI
+
+on:
+  push:
+    paths:
+      - 'BillingSystemUi/**'
+  pull_request:
+    paths:
+      - 'BillingSystemUi/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: List BillingSystemUi files
+      run: |
+        cd BillingSystemUi
+        ls -l
