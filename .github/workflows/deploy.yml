@@ -1,0 +1,27 @@
+name: CD for BillingSystemUi
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build WAR with Maven
+        run: mvn clean install
+
+      - name: Deploy to GlassFish autodeploy
+        run: |
+          cp target/*.war /home/musharraf/GlassFish_Server/glassfish/domains/domain1/autodeploy/
