@@ -46,7 +46,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Manage Customer Accounts</h5>
                     <p class="card-text">Add, edit, or update customer details and accounts.</p>
-                    <a href="manage-customers.jsp" class="btn btn-primary w-100">Go</a>
+                    <a href="mng-customer.jsp" class="btn btn-primary w-100">Go</a>
                 </div>
             </div>
         </div>
