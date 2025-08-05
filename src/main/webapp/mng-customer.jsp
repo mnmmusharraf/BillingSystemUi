@@ -116,14 +116,14 @@
                     editBtn.textContent = "Edit";
                     editBtn.className = "btn btn-warning btn-sm me-2";
                     editBtn.onclick = function (){
-                        window.location.href = "edit-customer.jsp?accountNum=" + customer.accountNum;
+                        window.location.href = "edit-customer.jsp?accountNum=" + customer.accountNumber;
                     };
                     
                     const deleteBtn = document.createElement("button");
                     deleteBtn.textContent = "Delete";
                     deleteBtn.className = "btn btn-danger btn-sm";
                     deleteBtn.onclick = function () {
-                        deleteCustomer(customer.accountNum);
+                        deleteCustomer(customer.accountNumber);
                     };
                     
                     actionCell.appendChild(editBtn);
