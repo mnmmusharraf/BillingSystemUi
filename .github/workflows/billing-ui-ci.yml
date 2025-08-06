@@ -17,6 +17,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: List BillingSystemUi files
-        run: |
-          cd BillingSystemUi
-          ls -l
+        run: ls -l
