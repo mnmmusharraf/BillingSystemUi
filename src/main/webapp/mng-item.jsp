@@ -27,7 +27,7 @@
             
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
-                    <a href="add-items.jsp" class="btn btn-outline-success">Add New Item</a>
+                    <a href="add-item.jsp" class="btn btn-outline-success">Add New Item</a>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <input type="text" id="searchInput" class="form-control" placeholder="Search..." style="width: 250px"/>
@@ -59,8 +59,8 @@
                 document.getElementById("searchInput").addEventListener("input",function(){
                     const query = this.value.toLowerCase();
                     const filtered = allItem.filter(item => 
-                        item.itemId.toLowerCase().includes(query)||
-                        item.name.toLowerCase().includes(query)
+                        item.itemId.toString().toLowerCase().includes(query)||
+                        item.itemName.toLowerCase().includes(query)
                     );
             renderTable(filtered);
                 });
@@ -94,10 +94,10 @@
                     idCell.textContent = item.itemId;
                     
                     const nameCell = document.createElement("td");
-                    nameCell.textContent = item.name;
+                    nameCell.textContent = item.itemName;
                     
                     const priceCell = document.createElement("td");
-                    priceCell.textContent = item.price;
+                    priceCell.textContent = item.itemPrice;
                     
                     const stockQuantityCell = document.createElement("td");
                     stockQuantityCell.textContent = item.stockQuantity;

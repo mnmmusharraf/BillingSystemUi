@@ -57,7 +57,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Manage Items</h5>
                     <p class="card-text">Add, update or delete product/item information.</p>
-                    <a href="manage-items.jsp" class="btn btn-success w-100">Go</a>
+                    <a href="mng-item.jsp" class="btn btn-success w-100">Go</a>
                 </div>
             </div>
         </div>
