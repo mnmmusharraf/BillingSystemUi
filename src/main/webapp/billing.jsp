@@ -31,24 +31,41 @@
                 <h2>Add to Cart</h2>
             </div>
             
-            <div class="row g-2 mb-4">
+            <div class="row g-2 mb-4 align-items-center">
+                <!-- Search box -->
                 <div class="col-md-6">
                     <input type="text" id="searchInput" class="form-control"
                            placeholder="Search by Item Name" 
                            aria-label="Search Item">
                 </div>
+
+                <!-- Search button -->
                 <div class="col-md-auto">
                     <button id="search" class="btn btn-primary w-100">
                         <span class="me-2 bi bi-search"></span> Search
                     </button>
                 </div>
+
+                <!-- Loading spinner -->
                 <div class="col-md-auto">
-                    <div class="loading-spinner spinner-border text-primary" role="status">
+                    <div class="loading-spinner spinner-border text-primary d-none" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
+
+                <!-- Cart button -->
+                <div class="col-md-auto">
+                    <button id="viewCart" class="btn btn-success position-relative">
+                        <i class="bi bi-cart-fill"></i> Cart
+                        <span id="cartCount" 
+                              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </button>
+                </div>
             </div>
-            
+
+             
             <div class="table-responsive shadow-sm rounded">
                 <table class="table table-bordered table-hover table-striped mb-0">
                     <thead class="table-dark">
@@ -141,13 +158,22 @@
                     
                     const actionCell = document.createElement("td");
                     
+                    const qtyInput = document.createElement("input");
+                    qtyInput.type = "number";
+                    qtyInput.min = "1";
+                    qtyInput.value = "1"; 
+                    qtyInput.className = "form-control form-control-sm d-inline-block me-2";
+                    qtyInput.style.width = "70px"; 
+                    
                     const addToCart = document.createElement("button");
                     addToCart.textContent = "Add to Cart";
                     addToCart.className = "btn btn-warning btn-sm me-2";
-                    addToCart.onclick = function (){
-                        //window.location.href = "billing.jsp?accountNum=" + customer.accountNumber;
-                    };
+                    addToCart.onclick = function () {
+                    const quantity = qtyInput.value;
+                    //window.location.href = `billing.jsp?accountNum=${accountNum}&itemId=${item.itemId}&qty=${quantity}`;
+                };
                     
+                    actionCell.appendChild(qtyInput);
                     actionCell.appendChild(addToCart);
                     
                     row.appendChild(idCell);
@@ -178,6 +204,20 @@
                     alert("Could not load item data. Check console for error.");
                 }
             }
+            
+            
+            let cart = [];
+
+            function addToCart(item) {
+                cart.push(item);
+                document.getElementById("cartCount").textContent = cart.length;
+            }
+
+            document.getElementById("viewCart").onclick = function () {
+                // Redirect to cart page or open modal
+                window.location.href = "cart.jsp"; // or your page
+            };
+
             
         </script>
     </body>
