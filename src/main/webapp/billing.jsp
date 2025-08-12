@@ -90,6 +90,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const accountNum = urlParams.get("accountNum");
             let allItem = [];
+            let cart = [];
             fetchItem();
             
             document.addEventListener("DOMContentLoaded",() => {
@@ -170,8 +171,33 @@
                     addToCart.className = "btn btn-warning btn-sm me-2";
                     addToCart.onclick = function () {
                     const quantity = qtyInput.value;
-                    //window.location.href = `billing.jsp?accountNum=${accountNum}&itemId=${item.itemId}&qty=${quantity}`;
+                    const params = new URLSearchParams();
+                    params.append("itemId", item.itemId);
+                    params.append("qty", quantity);
+
+                    fetch("add-to-cart.jsp", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: params.toString()
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.status === "success") {
+                            cart.push({itemId: item.itemId, qty: quantity});
+                            document.getElementById("cartCount").textContent = cart.length;
+                        } else {
+                            alert("Failed to add to cart.");
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert("Error adding to cart.");
+                    });
                 };
+
+
                     
                     actionCell.appendChild(qtyInput);
                     actionCell.appendChild(addToCart);
@@ -206,12 +232,7 @@
             }
             
             
-            let cart = [];
-
-            function addToCart(item) {
-                cart.push(item);
-                document.getElementById("cartCount").textContent = cart.length;
-            }
+   
 
             document.getElementById("viewCart").onclick = function () {
                 // Redirect to cart page or open modal
