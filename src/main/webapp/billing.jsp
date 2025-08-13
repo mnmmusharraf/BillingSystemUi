@@ -238,8 +238,9 @@
    
 
             document.getElementById("viewCart").onclick = function () {
-                // Redirect to cart page or open modal
-                window.location.href = "cart.jsp"; // or your page
+                let url = "cart.jsp";
+                if (accountNum) url += "?accountNum=" + encodeURIComponent(accountNum);
+                window.location.href = url;
             };
            
 
