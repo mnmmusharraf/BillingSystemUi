@@ -169,33 +169,36 @@
                     const addToCart = document.createElement("button");
                     addToCart.textContent = "Add to Cart";
                     addToCart.className = "btn btn-warning btn-sm me-2";
+                    const API_BASE = "http://localhost:8080/BillingSystemBackend/api";
+                    // Add item to cart
                     addToCart.onclick = function () {
-                    const quantity = qtyInput.value;
-                    const params = new URLSearchParams();
-                    params.append("itemId", item.itemId);
-                    params.append("qty", quantity);
+                        const quantity = parseInt(qtyInput.value);
+                        const cartItem = {
+                            itemId: item.itemId,
+                            quantity: quantity
+                        };
 
-                    fetch("add-to-cart.jsp", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        body: params.toString()
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.status === "success") {
-                            cart.push({itemId: item.itemId, qty: quantity});
+                        fetch(API_BASE + "/cart/add", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(cartItem)
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error("HTTP error " + response.status);
+                            return response.json();
+                        })
+                        .then(data => {
+                            cart = data; // The API returns the whole updated cart
                             document.getElementById("cartCount").textContent = cart.length;
-                        } else {
-                            alert("Failed to add to cart.");
-                        }
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        alert("Error adding to cart.");
-                    });
-                };
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            alert("Error adding to cart.");
+                        });
+                    };
+
 
 
                     
@@ -235,9 +238,11 @@
    
 
             document.getElementById("viewCart").onclick = function () {
-                // Redirect to cart page or open modal
-                window.location.href = "cart.jsp"; // or your page
+                let url = "cart.jsp";
+                if (accountNum) url += "?accountNum=" + encodeURIComponent(accountNum);
+                window.location.href = url;
             };
+           
 
             
         </script>
