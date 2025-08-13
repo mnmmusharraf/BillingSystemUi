@@ -147,7 +147,15 @@
                     startBilling.textContent = "Start Billing";
                     startBilling.className = "btn btn-warning btn-sm me-2";
                     startBilling.onclick = function (){
-                        window.location.href = "billing.jsp?accountNum=" + customer.accountNumber;
+                        // Clear cart for new customer
+                        fetch("http://localhost:8080/BillingSystemBackend/api/cart/clear", { method: "DELETE" })
+                            .then(() => {
+                                window.location.href = "billing.jsp?accountNum=" + customer.accountNumber;
+                            })
+                            .catch(() => {
+                                // Even if clearing fails, proceed to billing
+                                window.location.href = "billing.jsp?accountNum=" + customer.accountNumber;
+                            });
                     };
                     
                     actionCell.appendChild(startBilling);
